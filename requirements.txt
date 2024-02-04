@@ -1,0 +1,9 @@
+torch
+torchinfo
+diffusers
+insightface
+onnxruntime
+accelerate
+transformers
+gdown
+ipykernel
