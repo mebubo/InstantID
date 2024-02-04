@@ -1,6 +1,7 @@
 from huggingface_hub import hf_hub_download
 import gdown
 import os
+import zipfile
 
 # download models
 hf_hub_download(
@@ -24,4 +25,5 @@ hf_hub_download(
 # download antelopev2
 gdown.download(url="https://drive.google.com/file/d/18wEUfMNohBJ4K3Ly5wpTejPfDzp-8fI8/view?usp=sharing", output="./models/", quiet=False, fuzzy=True)
 # unzip antelopev2.zip
-os.system("unzip ./models/antelopev2.zip -d ./models/")
+with zipfile.ZipFile('models/antelopev2.zip','r') as zip_ref:
+  zip_ref.extractall('models')
