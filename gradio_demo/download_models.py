@@ -27,3 +27,17 @@ gdown.download(url="https://drive.google.com/file/d/18wEUfMNohBJ4K3Ly5wpTejPfDzp
 # unzip antelopev2.zip
 with zipfile.ZipFile('models/antelopev2.zip','r') as zip_ref:
   zip_ref.extractall('models')
+
+base_model_path = 'stabilityai/stable-diffusion-xl-base-1.0'
+controlnet_path = f'./checkpoints/ControlNetModel'
+
+import torch
+from pipeline_stable_diffusion_xl_instantid import StableDiffusionXLInstantIDPipeline
+from diffusers.models import ControlNetModel
+
+controlnet = ControlNetModel.from_pretrained(controlnet_path, torch_dtype=torch.float16)
+pipe = StableDiffusionXLInstantIDPipeline.from_pretrained(
+    base_model_path,
+    controlnet=controlnet,
+    torch_dtype=torch.float16,
+)
