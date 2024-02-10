@@ -1,3 +1,4 @@
+#%%
 import cv2
 import torch
 import numpy as np
@@ -32,12 +33,24 @@ def resize_img(input_image, max_side=1280, min_side=1024, size=None,
         input_image = Image.fromarray(res)
     return input_image
 
+#%%
 
 if __name__ == "__main__":
 
     # Load face encoder
     app = FaceAnalysis(name='antelopev2', root='./', providers=['CUDAExecutionProvider', 'CPUExecutionProvider'])
     app.prepare(ctx_id=0, det_size=(640, 640))
+
+    face_image = load_image("./examples/yann-lecun_resize.jpg")
+    face_image = resize_img(face_image)
+
+    face_info = app.get(cv2.cvtColor(np.array(face_image), cv2.COLOR_RGB2BGR))
+    face_info = sorted(face_info, key=lambda x:(x['bbox'][2]-x['bbox'][0])*x['bbox'][3]-x['bbox'][1])[-1] # only use the maximum face
+    face_emb = face_info['embedding']
+    face_kps = draw_kps(face_image, face_info['kps'])
+
+#%%
+if __name__ == "__main__":
 
     # Path to InstantID models
     face_adapter = f'./checkpoints/ip-adapter.bin'
@@ -59,14 +72,6 @@ if __name__ == "__main__":
     # Infer setting
     prompt = "analog film photo of a man. faded film, desaturated, 35mm photo, grainy, vignette, vintage, Kodachrome, Lomography, stained, highly detailed, found footage, masterpiece, best quality"
     n_prompt = "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured (lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch,deformed, mutated, cross-eyed, ugly, disfigured"
-
-    face_image = load_image("./examples/yann-lecun_resize.jpg")
-    face_image = resize_img(face_image)
-
-    face_info = app.get(cv2.cvtColor(np.array(face_image), cv2.COLOR_RGB2BGR))
-    face_info = sorted(face_info, key=lambda x:(x['bbox'][2]-x['bbox'][0])*x['bbox'][3]-x['bbox'][1])[-1] # only use the maximum face
-    face_emb = face_info['embedding']
-    face_kps = draw_kps(face_image, face_info['kps'])
 
     image = pipe(
         prompt=prompt,

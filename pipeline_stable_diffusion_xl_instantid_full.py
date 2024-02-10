@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+#%%
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
 import cv2
@@ -50,6 +50,7 @@ from ip_adapter.attention_processor import region_control
 
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
+#%%
 
 EXAMPLE_DOC_STRING = """
     Examples:
