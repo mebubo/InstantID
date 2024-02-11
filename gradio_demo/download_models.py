@@ -22,11 +22,12 @@ hf_hub_download(
     filename="pytorch_lora_weights.safetensors",
     local_dir="./checkpoints",
 )
-# download antelopev2
-gdown.download(url="https://drive.google.com/file/d/18wEUfMNohBJ4K3Ly5wpTejPfDzp-8fI8/view?usp=sharing", output="./models/", quiet=False, fuzzy=True)
-# unzip antelopev2.zip
-with zipfile.ZipFile('models/antelopev2.zip','r') as zip_ref:
-  zip_ref.extractall('models')
+
+destination_file = './models/antelopev2.zip'
+if not os.path.exists(destination_file):
+    gdown.download(url="https://drive.google.com/file/d/18wEUfMNohBJ4K3Ly5wpTejPfDzp-8fI8/view?usp=sharing", output=destination_file, quiet=False, fuzzy=True)
+    with zipfile.ZipFile(destination_file, 'r') as zip_ref:
+        zip_ref.extractall('models')
 
 base_model_path = 'stabilityai/stable-diffusion-xl-base-1.0'
 controlnet_path = f'./checkpoints/ControlNetModel'
