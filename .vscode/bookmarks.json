@@ -69,6 +69,31 @@
 					"label": ""
 				}
 			]
+		},
+		{
+			"path": ".venv/lib/python3.10/site-packages/diffusers/models/controlnet.py",
+			"bookmarks": [
+				{
+					"line": 666,
+					"column": 8,
+					"label": ""
+				},
+				{
+					"line": 771,
+					"column": 45,
+					"label": ""
+				},
+				{
+					"line": 806,
+					"column": 20,
+					"label": ""
+				},
+				{
+					"line": 821,
+					"column": 20,
+					"label": ""
+				}
+			]
 		}
 	]
 }
