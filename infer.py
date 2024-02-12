@@ -1,6 +1,7 @@
 #%%
 import cv2
 import torch
+import torchinfo
 import numpy as np
 from PIL import Image
 
@@ -8,7 +9,7 @@ from diffusers.utils import load_image
 from diffusers.models import ControlNetModel
 
 from insightface.app import FaceAnalysis
-from pipeline_stable_diffusion_xl_instantid import StableDiffusionXLInstantIDPipeline, draw_kps
+import pipeline_stable_diffusion_xl_instantid
 
 def resize_img(input_image, max_side=1280, min_side=1024, size=None, 
                pad_to_max_side=False, mode=Image.BILINEAR, base_pixel_number=64):
@@ -47,7 +48,7 @@ if __name__ == "__main__":
     face_info = app.get(cv2.cvtColor(np.array(face_image), cv2.COLOR_RGB2BGR))
     face_info = sorted(face_info, key=lambda x:(x['bbox'][2]-x['bbox'][0])*x['bbox'][3]-x['bbox'][1])[-1] # only use the maximum face
     face_emb = face_info['embedding']
-    face_kps = draw_kps(face_image, face_info['kps'])
+    face_kps = pipeline_stable_diffusion_xl_instantid.draw_kps(face_image, face_info['kps'])
 
 #%%
 if __name__ == "__main__":
@@ -61,7 +62,7 @@ if __name__ == "__main__":
 
     base_model_path = 'stabilityai/stable-diffusion-xl-base-1.0'
 
-    pipe = StableDiffusionXLInstantIDPipeline.from_pretrained(
+    pipe = pipeline_stable_diffusion_xl_instantid.StableDiffusionXLInstantIDPipeline.from_pretrained(
         base_model_path,
         controlnet=controlnet,
         torch_dtype=torch.float16,
@@ -69,6 +70,9 @@ if __name__ == "__main__":
     pipe.cuda()
     pipe.load_ip_adapter_instantid(face_adapter)
 
+#%%
+
+if __name__ == "__main__":
     # Infer setting
     prompt = "analog film photo of a man. faded film, desaturated, 35mm photo, grainy, vignette, vintage, Kodachrome, Lomography, stained, highly detailed, found footage, masterpiece, best quality"
     n_prompt = "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured (lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch,deformed, mutated, cross-eyed, ugly, disfigured"
@@ -85,3 +89,14 @@ if __name__ == "__main__":
     ).images[0]
 
     image.save('result.jpg')
+
+#%%
+
+torchinfo.summary(pipe.unet)
+
+#%%
+
+from importlib import reload
+reload(pipeline_stable_diffusion_xl_instantid)
+
+# %%
