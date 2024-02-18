@@ -7,6 +7,7 @@ mkdir -p .cache-huggingface
 ln -s $PWD/.cache-huggingface ~/.cache/huggingface
 
 python -m venv ~/.venv
+rm -f .venv
 ln -s ~/.venv
 
 .venv/bin/pip install -r requirements.txt

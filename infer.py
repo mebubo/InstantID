@@ -79,13 +79,13 @@ pipe.cuda()
 
 #%%
 
-do_load_adapter = False
+do_load_adapter = True
 pipe.load_ip_adapter_instantid(face_adapter, do_load_adapter=do_load_adapter)
 
 #%%
 
 ip_adapter_scale = 0.8
-controlnet_conditioning_scale = 0.8
+controlnet_conditioning_scale = 0.0
 num_inference_steps = 50
 seed = 0
 # Infer setting
