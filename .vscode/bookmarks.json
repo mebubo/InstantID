@@ -9,38 +9,33 @@
 					"label": ""
 				},
 				{
-					"line": 161,
+					"line": 162,
 					"column": 8,
 					"label": ""
 				},
 				{
-					"line": 219,
+					"line": 220,
 					"column": 34,
 					"label": ""
 				},
 				{
-					"line": 264,
+					"line": 265,
 					"column": 0,
 					"label": ""
 				},
 				{
-					"line": 522,
+					"line": 523,
 					"column": 10,
 					"label": ""
 				},
 				{
-					"line": 643,
+					"line": 644,
 					"column": 58,
 					"label": ""
 				},
 				{
-					"line": 689,
+					"line": 690,
 					"column": 42,
-					"label": ""
-				},
-				{
-					"line": 708,
-					"column": 20,
 					"label": ""
 				}
 			]
@@ -91,6 +86,16 @@
 				{
 					"line": 821,
 					"column": 20,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": ".venv/lib/python3.10/site-packages/diffusers/pipelines/controlnet/pipeline_controlnet_sd_xl.py",
+			"bookmarks": [
+				{
+					"line": 690,
+					"column": 0,
 					"label": ""
 				}
 			]
